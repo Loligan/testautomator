@@ -22,7 +22,7 @@ public class test {
         desiredCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Browser");
         desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 1);
             System.out.println("NEW ANDROID DRIVER");
-            AppiumDriver driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"),desiredCapabilities);
+            AndroidDriver driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"),desiredCapabilities);
             System.out.println("Close app");
             driver.closeApp();
             System.out.println("Get page sourcr");
