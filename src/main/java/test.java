@@ -1,5 +1,6 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
@@ -15,6 +16,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.*;
 import java.net.URL;
+import java.rmi.Remote;
 import java.util.List;
 
 public class test {
@@ -45,7 +47,8 @@ public class test {
 //        driver.findElement(By.xpath(".//*[@ text=\"Gallery\"]"));
 
         List elements = driver.findElementsByAndroidUIAutomator("new UiSelector().text(\"Gallery\")");
-        System.out.println(elements.getClass());
+        driver.performTouchAction(new TouchAction(driver).tap((RemoteWebElement)elements.get(0)));
+//        System.out.println(elements.get(0).getClass());
 
 //        System.out.println("Click eula accept");
 //        WebElement element = driver.findElement(By.id("com.whatsapp:id/eula_accept"));
