@@ -38,22 +38,30 @@ public class test {
 //
 //        desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 1);
 //        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
-
+        System.out.println("1");
         AndroidDriver driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
+        System.out.println("2");
         List els = driver.findElements(By.id("com.whatsapp:id/eula_accept"));
+        System.out.println("3");
         driver.pressKeyCode(AndroidKeyCode.HOME);
+        driver.pressKeyCode(AndroidKeyCode.HOME);
+        System.out.println("4");
 
 //        System.out.println(driver.getPageSource());
 //        driver.findElement(By.xpath(".//*[@ text=\"Gallery\"]"));
+        System.out.println("5");
 
-        List elements = driver.findElementsByAndroidUIAutomator("new UiSelector().text(\"Gallery\")");
+//        List elements = driver.findElementsByAndroidUIAutomator("new UiSelector().text(\"Gallery\")");
+        List elements = driver.findElementsByAndroidUIAutomator("new UiSelector().description(\"Apps\")");
         driver.performTouchAction(new TouchAction(driver).tap((RemoteWebElement)elements.get(0)));
+//        System.out.println("SIZE "+ elements.size());
 //        System.out.println(elements.get(0).getClass());
 
 //        System.out.println("Click eula accept");
 //        WebElement element = driver.findElement(By.id("com.whatsapp:id/eula_accept"));
 //        element.click();
 //
+        System.out.println("6");
 //        ((AndroidDriver)driver).pressKeyCode(AndroidKeyCode.HOME);
 
 //        System.out.println("Gallery");
