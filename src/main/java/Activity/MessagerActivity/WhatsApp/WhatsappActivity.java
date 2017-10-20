@@ -1,6 +1,6 @@
-package MessagerActivity.WhatsApp;
+package Activity.MessagerActivity.WhatsApp;
 
-import MessagerActivity.MessagerActivity;
+import Activity.MessagerActivity.MessagerActivity;
 
 import java.lang.reflect.Array;
 

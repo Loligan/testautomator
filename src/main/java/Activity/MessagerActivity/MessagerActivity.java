@@ -1,4 +1,4 @@
-package MessagerActivity;
+package Activity.MessagerActivity;
 
 import java.lang.reflect.Array;
 

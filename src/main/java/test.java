@@ -1,3 +1,4 @@
+import Activity.PhonebookAdderActivity.PhonebookAdderActivity;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -15,6 +16,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.Remote;
 import java.util.List;
@@ -23,8 +26,16 @@ public class test {
 
 // adb
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        File file = new File("src/main/resources/apk/whatsapp-messenger-2-17-369.apk");
+    public static void main(String[] args) throws MalformedURLException {
+        PhonebookAdderActivity phonebookAdderActivity = new PhonebookAdderActivity();
+        phonebookAdderActivity.initEmulator();
+        String[] phones = {"123", "321"};
+        phonebookAdderActivity.addPhones(phones);
+    }
+
+    public static void mainGg(String[] args) throws IOException, InterruptedException {
+//        File file = new File("src/main/resources/apk/whatsapp-messenger-2-17-369.apk");
+        File file = new File("src/main/resources/apk/contact-creater.apk");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
@@ -53,7 +64,7 @@ public class test {
 
 //        List elements = driver.findElementsByAndroidUIAutomator("new UiSelector().text(\"Gallery\")");
         List elements = driver.findElementsByAndroidUIAutomator("new UiSelector().description(\"Apps\")");
-        driver.performTouchAction(new TouchAction(driver).tap((RemoteWebElement)elements.get(0)));
+        driver.performTouchAction(new TouchAction(driver).tap((RemoteWebElement) elements.get(0)));
 //        System.out.println("SIZE "+ elements.size());
 //        System.out.println(elements.get(0).getClass());
 
