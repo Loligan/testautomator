@@ -1,3 +1,5 @@
+import Activity.MessagerActivity.WhatsApp.WhatsappActivity;
+import Activity.PhoneActivity.CorePhoneActivity;
 import Activity.PhonebookAdderActivity.PhonebookAdderActivity;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -28,10 +30,35 @@ public class test {
 
     public static void main(String[] args) throws MalformedURLException {
         PhonebookAdderActivity phonebookAdderActivity = new PhonebookAdderActivity();
-        phonebookAdderActivity.initEmulator();
-        String[] phones = {"123", "321"};
-        phonebookAdderActivity.addPhones(phones);
+        phonebookAdderActivity.initEmulator("emulator-5554");
+        AndroidDriver driver = phonebookAdderActivity.getDriver();
+        //        String[] phones = {"123", "321"};
+//        phonebookAdderActivity.addPhones(phones);
+
+        CorePhoneActivity corePhoneActivity = new CorePhoneActivity();
+        corePhoneActivity.setDriver(driver);
+        corePhoneActivity.pressHomeSystemButton();
+        corePhoneActivity.pressAppsIcon();
+
+        try {
+            corePhoneActivity.clickIconAppInAppsWindow(WhatsappActivity.NAME_APPLICATION);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        WhatsappActivity whatsappActivity = new WhatsappActivity();
+        whatsappActivity.setDriver(corePhoneActivity.getDriver());
+        if(whatsappActivity.checkIsWelcomeScreen()){
+            whatsappActivity.tapOnAgreeAndContinueButton();
+            System.out.println("SET CODE PHONE NUMBER");
+            whatsappActivity.setCodePhoneNumber("375");
+            System.out.println("SET PHONE NUMBER");
+            whatsappActivity.setPhoneNumber("256233528");
+//            whatsappActivity.tabNextButton();
+        }
+
     }
+
 
     public static void mainGg(String[] args) throws IOException, InterruptedException {
 //        File file = new File("src/main/resources/apk/whatsapp-messenger-2-17-369.apk");

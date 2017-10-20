@@ -3,8 +3,6 @@ package Activity.PhonebookAdderActivity;
 import Activity.AppActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import org.openqa.selenium.By;
 
 import java.net.MalformedURLException;
 
@@ -18,8 +16,8 @@ public class PhonebookAdderActivity extends AppActivity {
     private static final String LABEL_RESULT_WEB_XPATH = "//android.widget.TextView[@resource-id=\"dot.application.phonebookadder:id/textView\"]/@text";
     private static final String ADD_CONTACTS_STRING = "Json length:";
 
-    public boolean initEmulator() throws MalformedURLException {
-        runEmulator(APK_NAME, WAIT_ACTIVITY,"4.4","emulator-5554");
+    public boolean initEmulator(String deviceName) throws MalformedURLException {
+        runEmulator(APK_NAME, WAIT_ACTIVITY,"4.4",deviceName);
         return true;
     }
 

@@ -2,6 +2,7 @@ package Activity;
 
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.remote.MobilePlatform;
 import org.openqa.selenium.By;
@@ -27,14 +28,18 @@ public abstract class AppActivity {
 
     private AndroidDriver driver;
 
-    public abstract boolean initEmulator() throws MalformedURLException;
+    public abstract boolean initEmulator(String deviceName) throws MalformedURLException;
 
     public void setDriver(AndroidDriver driver) {
         this.driver = driver;
     }
 
+    public AndroidDriver getDriver() {
+        return this.driver;
+    }
+
     protected void runEmulator(String apkName, String mainActivity, String platformVersion, String deviceName) throws MalformedURLException {
-        File file = new File("src/main/resources/apk/"+apkName+".apk");
+        File file = new File("src/main/resources/apk/" + apkName + ".apk");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
@@ -46,18 +51,19 @@ public abstract class AppActivity {
         driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
     }
 
-    protected void findUiAutomatorAndTap(String uiAutomatorPath){
+    protected void findUiAutomatorAndTap(String uiAutomatorPath) {
         List elements = driver.findElementsByAndroidUIAutomator(uiAutomatorPath);
-        driver.performTouchAction(new TouchAction(driver).tap((RemoteWebElement)elements.get(0)));
+        driver.performTouchAction(new TouchAction(driver).tap((RemoteWebElement) elements.get(0)));
     }
 
-    protected void findUiAutomatorElementAndSendKeys(String uiAutomatorPath, String data){
+    protected void findUiAutomatorElementAndSendKeys(String uiAutomatorPath, String data) {
         findUiAutomatorAndTap(uiAutomatorPath);
         driver.getKeyboard().sendKeys(data);
         driver.hideKeyboard();
     }
 
-    protected String findWebXpathElementAndGetTextNode(String webXpath){
+    protected String findWebXpathElementAndGetTextNode(String webXpath) {
+        System.out.println(driver.getPageSource());
         InputSource source = new InputSource(new StringReader(driver.getPageSource()));
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -87,4 +93,22 @@ public abstract class AppActivity {
         return msg;
 
     }
+
+    protected void pressSystemButton(int androidKeyCode){
+        driver.pressKeyCode(androidKeyCode);
+    }
+
+    protected void swipe(){
+        driver.swipe(300,150,50,150,500);
+    }
+
+    protected boolean checkFindElement(String uiAutomatorPath){
+        List elements = driver.findElementsByAndroidUIAutomator(uiAutomatorPath);
+        if(elements.size()>0){
+            return true;
+        }
+        return false;
+    }
+
+
 }
