@@ -10,6 +10,7 @@ import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.remote.MobilePlatform;
+import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +22,9 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.rmi.Remote;
+import java.util.Date;
 import java.util.List;
 
 public class test {
@@ -48,17 +51,61 @@ public class test {
 
         WhatsappActivity whatsappActivity = new WhatsappActivity();
         whatsappActivity.setDriver(corePhoneActivity.getDriver());
-        if(whatsappActivity.checkIsWelcomeScreen()){
+        System.out.println(new Date().toString());
+        waitCodeFromFile();
+
+        if (whatsappActivity.checkIsWelcomeScreen()) {
             whatsappActivity.tapOnAgreeAndContinueButton();
             System.out.println("SET CODE PHONE NUMBER");
             whatsappActivity.setCodePhoneNumber("375");
             System.out.println("SET PHONE NUMBER");
             whatsappActivity.setPhoneNumber("256233528");
-//            whatsappActivity.tabNextButton();
+            whatsappActivity.tabNextButton();
+            sleep(25);
+            whatsappActivity.tapOkModalButton();
+            String passcode = waitCodeFromFile();
+            System.out.println("PASS CODE: "+passcode);
+            whatsappActivity.setSmsPasscodeInput(passcode);
+            sleep(10);
+            whatsappActivity.tapSkipModalButton();
+
+            whatsappActivity.setRegistrationName("meldon");
         }
 
     }
 
+    private static String waitCodeFromFile() {
+        while (true) {
+            String everything = null;
+            try {
+                FileInputStream inputStream = new FileInputStream("src/main/resources/files/code-number-whatsapp");
+                everything = IOUtils.toString(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(!everything.equals("")){
+                return everything;
+            }
+
+            try {
+                System.out.println(new Date().toString());
+                System.out.println("NOT FOUND");
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public static void sleep(int seconds){
+        try {
+            Thread.sleep(seconds*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void mainGg(String[] args) throws IOException, InterruptedException {
 //        File file = new File("src/main/resources/apk/whatsapp-messenger-2-17-369.apk");

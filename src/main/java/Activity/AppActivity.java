@@ -6,6 +6,8 @@ import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.remote.MobilePlatform;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.w3c.dom.Document;
@@ -37,6 +39,9 @@ public abstract class AppActivity {
     public AndroidDriver getDriver() {
         return this.driver;
     }
+    public void closeDriver() {
+         this.driver.close();
+    }
 
     protected void runEmulator(String apkName, String mainActivity, String platformVersion, String deviceName) throws MalformedURLException {
         File file = new File("src/main/resources/apk/" + apkName + ".apk");
@@ -45,7 +50,12 @@ public abstract class AppActivity {
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
         desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
         desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
-
+        desiredCapabilities.setCapability(MobileCapabilityType.FULL_RESET, false);
+        desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, true);
+//        long timeout = 30*60*1000;
+        long timeout = 0;
+        desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, timeout);
+        desiredCapabilities.setCapability("TIMEOUT",timeout);
         desiredCapabilities.setCapability(MobileCapabilityType.APP, file.getAbsolutePath());
         desiredCapabilities.setCapability("appWaitActivity", mainActivity);
         driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
