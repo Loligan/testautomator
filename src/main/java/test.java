@@ -70,6 +70,9 @@ public class test {
             whatsappActivity.tapSkipModalButton();
 
             whatsappActivity.setRegistrationName("meldon");
+//            whatsappActivity.setRegistrationName("meldon");
+        }else {
+            System.out.println("Yo. Thi is not welcome screen");
         }
 
     }
